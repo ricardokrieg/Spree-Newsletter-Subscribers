@@ -1,5 +1,7 @@
 module Spree
   class NewsletterSubscribersController < BaseController
+    skip_before_filter :verify_authenticity_token, only: :create
+    
     rescue_from ActiveRecord::RecordNotFound, :with => :render_404
     respond_to :html
 
