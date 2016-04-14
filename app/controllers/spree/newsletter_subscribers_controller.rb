@@ -4,7 +4,7 @@ module Spree
     respond_to :html
 
     def create
-      @newsletter_subscriber = NewsletterSubscriber.new(params[:newsletter_subscriber])
+      @newsletter_subscriber = NewsletterSubscriber.new(params.require(:newsletter_subscriber).permit!)
   
       respond_to do |format|
         if @newsletter_subscriber.save
