@@ -1,3 +1,11 @@
+<% content_for :page_title do %>
+  <%= plural_resource_name(Spree::NewsletterSubscriber) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <%= button_link_to Spree.t(:new_newsletter_subscriber), new_object_url, icon: 'plus', class: 'btn-primary', id: 'admin_new_newsletter_subscriber' %>
+<% end %>
+
 <div class="toolbar" data-hook="toolbar">
   <ul class="actions">
     <li>
@@ -7,23 +15,29 @@
   <br class="clear" />
 </div>
 
-<h1><%= t(:newsletter_subscribers) %></h1>
-<table class="index">
-  <thead>
-    <tr data-hook="categories_header">
-      <th><%= t(:email) %></th>
-      <th><%= t(:action) %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @newsletter_subscribers.each do |newsletter_subscriber|%>
-    <tr id="<%= spree_dom_id newsletter_subscriber %>" data-hook="newsletter_subscriber_row">
-      <td style="width:350px;"><%= newsletter_subscriber.email %></td>
-      <td>
-        <%= link_to_edit newsletter_subscriber %> &nbsp;
-        <%= link_to_delete newsletter_subscriber %>
-      </td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+<% if @newsletter_subscribers.any? %>
+  <table class="table" id="listing_newsletter_subscribers" data-hook>
+    <thead>
+      <tr data-hook="categories_header">
+        <th><%= t(:email) %></th>
+        <th><%= t(:action) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @newsletter_subscribers.each do |newsletter_subscriber|%>
+      <tr id="<%= spree_dom_id newsletter_subscriber %>" data-hook="newsletter_subscriber_row">
+        <td style="width:350px;"><%= newsletter_subscriber.email %></td>
+        <td>
+          <%= link_to_edit newsletter_subscriber %> &nbsp;
+          <%= link_to_delete newsletter_subscriber %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alert alert-warning no-objects-found">
+    <%= Spree.t(:no_resource_found, resource: Spree::NewsletterSubscriber.model_name.human) %>,
+    <%= link_to Spree.t(:add_one), spree.new_admin_newsletter_subscriber_path %>!
+  </div>
+<% end %>
