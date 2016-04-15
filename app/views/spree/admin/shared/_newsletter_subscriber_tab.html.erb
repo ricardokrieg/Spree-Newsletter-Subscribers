@@ -1,1 +1,3 @@
-<%= tab :newsletter_subscribers %>
+<ul class="nav nav-sidebar">
+  <%= tab Spree::NewsletterSubscriber, url: spree.admin_newsletter_subscribers_url, icon: 'envelope', label: plural_resource_name(Spree::NewsletterSubscriber) %>
+</ul>
